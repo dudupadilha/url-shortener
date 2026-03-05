@@ -46,6 +46,12 @@
                     </div>
                 @endif
 
+                @if(session('erro'))
+                    <div class="mt-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 rounded-r-lg">
+                        <p class="font-bold">{{ session('erro') }}</p>
+                    </div>
+                @endif
+
                 @if(session('sucesso'))
                     <div class="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl text-center">
                         <p class="text-blue-600 font-medium mb-2">Seu link está pronto!</p>
@@ -63,8 +69,8 @@
 
             <section class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="p-6 border-b border-slate-100 flex justify-between items-center">
-                    <h2 class="text-xl font-bold text-slate-800">Últimos Links</h2>
-                    <span class="text-xs font-semibold bg-slate-100 text-slate-500 px-3 py-1 rounded-full uppercase tracking-wider">Top 5 Recentes</span>
+                    <h2 class="text-xl font-bold text-slate-800">Links Populares</h2>
+                    <span class="text-xs font-semibold bg-slate-100 text-slate-500 px-3 py-1 rounded-full uppercase tracking-wider">Top 5 Mais Acessados</span>
                 </div>
 
                 <div class="overflow-x-auto">
