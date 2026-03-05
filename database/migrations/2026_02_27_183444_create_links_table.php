@@ -11,9 +11,10 @@ return new class extends Migration
         Schema::create('links', function(Blueprint $table){
             $table->id();
             $table->timestamps();
-            $table->text('complete_url');
-            $table->string('short_url')->unique();
-            $table->integer('click_count')->default(0);
+            $table->timestamp('expires_at')->nullable()->index();
+            $table->mediumtext('complete_url');
+            $table->string('short_url', 10)->unique()->index();
+            $table->bigInteger('click_count')->default(0);
         });
     }
     public function down(): void
