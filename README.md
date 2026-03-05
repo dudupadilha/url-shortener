@@ -2,7 +2,7 @@
 
 Esse é um projeto que desenvolvi para estudo, onde criei um encurtador de links funcional utilizando o **Laravel** como ferramenta principal. A ideia foi entender na prática como o framework lida com rotas, banco de dados, filas assíncronas, cache com Redis e a arquitetura MVC.
 
-> **Evolução:** Esta é a **versão 2** do projeto. Na [v1](https://github.com/dudupadilha/url-shortener/tree/v1/sync-insert), tudo era feito de forma síncrona — o código era gerado aleatoriamente e o INSERT no banco acontecia dentro da própria request, o que funcionava bem para uso simples, mas travava sob alta carga. Nesta versão, introduzi **filas assíncronas**, **pré-geração de códigos**, **cache de redirects** e **contagem de cliques via Redis**, tornando a aplicação capaz de lidar com centenas de milhares de requisições.
+> **Evolução:** Esta é a **versão 2** do projeto. Na [v1](https://github.com/dudupadilha/url-shortener/releases/tag/v1.0), tudo era feito de forma síncrona — o código era gerado aleatoriamente e o INSERT no banco acontecia dentro da própria request, o que funcionava bem para uso simples, mas travava sob alta carga. Nesta versão, introduzi **filas assíncronas**, **pré-geração de códigos**, **cache de redirects** e **contagem de cliques via Redis**, tornando a aplicação capaz de lidar com centenas de milhares de requisições.
 
 
 
@@ -21,7 +21,7 @@ Basicamente, você cola uma URL longa e o sistema gera um código aleatório de 
 
 | Aspecto | v1 (sync-insert) | v2 (async-queue) |
 |---|---|---|
-| **Geração de códigos** | Gerado aleatoriamente a cada request com verificação de duplicata no banco | Pré-gerados em lote (1M) e armazenados no Redis |
+| **Geração de códigos** | Gerado aleatoriamente a cada request com verificação de duplicata no banco | Pré-gerados em lote (1M) e armazenados no Redis; o tamanho foi expandido para 10 caracteres para garantir unicidade e minimizar drasticamente a probabilidade de colisões. |
 | **Inserção no banco** | Síncrona dentro da request (INSERT direto) | Assíncrona via Job na fila do Redis |
 | **Redirect** | Busca no MySQL a cada acesso | Cache no Redis, MySQL só como fallback |
 | **Contagem de cliques** | `UPDATE` no MySQL a cada clique | `hincrby` no Redis, sync com MySQL a cada 5 min |
